@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ProductNotFoundAdvice {
+public class ProductNameMustBeUniqueAdvice {
 
-    @ExceptionHandler(ProductNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    ErrorResponse productNotFoundHandler(ProductNotFoundException ex) {
-        return new ErrorResponse(ex.getMessage());
-    }
+    @ExceptionHandler(ProductNameMustBeUniqueException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    ErrorResponse productNameMustBeUniqueHandler(ProductNameMustBeUniqueException ex) {
+        return new ErrorResponse(ex.getMessage());    }
 }

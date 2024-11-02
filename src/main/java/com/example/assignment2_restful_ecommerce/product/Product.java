@@ -11,6 +11,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String name;
     private String description;
     private double price;
@@ -20,12 +21,23 @@ public class Product {
 
     protected Product() {}
 
+    // Product default constructor
     public Product(String name, String description, double price, int stock_quantity, String image_path) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock_quantity = stock_quantity;
         this.image_path = image_path;
+    }
+
+    // Product constructor with discounted price
+    public Product(Product product, double discountedPrice) {
+        this.id = product.getId();
+        this.name = product.getName();
+        this.description = product.getDescription();
+        this.price = discountedPrice;
+        this.stock_quantity = product.getStockQuantity();
+        this.image_path = product.getImagePath();
     }
 
     @Override
@@ -52,11 +64,46 @@ public class Product {
         return price;
     }
 
+    public double getDiscountedPrice(int discount) {
+        if (discount < 0 || discount > 100) {
+            throw new IllegalArgumentException("Discount must be between 0 and 100");
+        }
+        return price * (1 - discount / 100.0);
+    }
+
     public int getStockQuantity() {
         return stock_quantity;
     }
 
     public String getImagePath() {
         return image_path;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPrice(double price) {
+        if (price < 0) {
+            throw new IllegalArgumentException("Price must be greater than or equal to 0");
+        }
+
+        this.price = price;
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        if (stockQuantity < 0) {
+            throw new IllegalArgumentException("Stock quantity must be greater than or equal to 0");
+        }
+
+        this.stock_quantity = stockQuantity;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.image_path = imagePath;
     }
 }
