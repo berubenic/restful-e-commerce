@@ -11,14 +11,19 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true, nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String description;
+
     @Column(nullable = false)
     private double price;
+
     @Column(nullable = false)
     private int stock_quantity;
+
     @Column(nullable = false)
     private String image_path; // relative path from the resources/static/images folder
     // TODO: add a relationship to the Category entity
