@@ -1,7 +1,15 @@
 package com.example.assignment2_restful_ecommerce.product;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 
@@ -9,21 +17,38 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
+    /**
+     * Product service.
+     */
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    /**
+     * Constructor.
+     *
+     * @param pProductService product service
+     */
+    public ProductController(final ProductService pProductService) {
+        this.productService = pProductService;
     }
 
     /**
-     * Get all products
+     * Get all products.
      *
-     * @param keyword filter by name or description
+     * @param keyword  filter by name or description
      * @param discount apply given discount to all products
      * @return list of products
      */
-    @GetMapping(path = {"", "/"}, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    public List<Product> all(@RequestParam(required = false) String keyword, @RequestParam(required = false) Integer discount) {
+    @GetMapping(
+            path = {"", "/"},
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE
+            }
+    )
+    public List<Product> all(
+            @RequestParam(required = false) final String keyword,
+            @RequestParam(required = false) final Integer discount
+    ) {
         List<Product> products = productService.getAllProducts(keyword);
 
         if (discount != null) {
@@ -34,14 +59,23 @@ public class ProductController {
     }
 
     /**
-     * Get one product by id
+     * Get one product by id.
      *
-     * @param id product id
+     * @param id       product id
      * @param discount apply given discount to the product
      * @return product
      */
-    @GetMapping(path = {"/{id}"}, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    public Product one(@PathVariable Long id, @RequestParam(required = false) Integer discount) {
+    @GetMapping(
+            path = {"/{id}"},
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE
+            }
+    )
+    public Product one(
+            @PathVariable final Long id,
+            @RequestParam(required = false) final Integer discount
+    ) {
         Product product = productService.getProductById(id)
                 .orElseThrow(() -> new ProductNotFoundException(id));
 
@@ -56,12 +90,21 @@ public class ProductController {
      * Update a product.
      * Uses a complete product object to update the existing product.
      *
-     * @param id product id
+     * @param id         product id
      * @param newProduct new product object
      * @return updated product
      */
-    @PutMapping(path = {"/{id}"}, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    public Product update(@PathVariable Long id, @RequestBody Product newProduct) {
+    @PutMapping(
+            path = {"/{id}"},
+            consumes = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE
+            }
+    )
+    public Product update(
+            @PathVariable final Long id,
+            @RequestBody final Product newProduct
+    ) {
         return productService.updateProduct(id, newProduct);
     }
 
@@ -71,8 +114,16 @@ public class ProductController {
      * @param newProduct new product object
      * @return created product
      */
-    @PostMapping(path = {"", "/"}, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    public Product create(@RequestBody Product newProduct) {
+    @PostMapping(
+            path = {"", "/"},
+            consumes = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE
+            }
+    )
+    public Product create(
+            @RequestBody final Product newProduct
+    ) {
         return productService.createProduct(newProduct);
     }
 
@@ -81,8 +132,16 @@ public class ProductController {
      *
      * @param id product id
      */
-    @DeleteMapping(path = {"/{id}"}, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    public void delete(@PathVariable Long id) {
+    @DeleteMapping(
+            path = {"/{id}"},
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE
+            }
+    )
+    public void delete(
+            @PathVariable final Long id
+    ) {
         productService.deleteProduct(id);
     }
 }

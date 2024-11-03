@@ -1,8 +1,8 @@
 CREATE TABLE products (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) UNIQUE NOT NULL,
-  description TEXT,
+  description TEXT NOT NULL,
   price DOUBLE NOT NULL,
   stock_quantity INT NOT NULL,
-  image_path VARCHAR(255)
+  image_path VARCHAR(255) NOT NULL
 );

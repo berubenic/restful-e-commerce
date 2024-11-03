@@ -9,20 +9,32 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
+    /**
+     * Maximum discount percentage.
+     */
+    public static final int MAX_DISCOUNT = 100;
 
+    /**
+     * Product repository.
+     */
     private final ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    /**
+     * Constructor.
+     *
+     * @param pProductRepository the product repository
+     */
+    public ProductService(final ProductRepository pProductRepository) {
+        this.productRepository = pProductRepository;
     }
 
     /**
-     * Get all products
+     * Get all products.
      *
      * @param keyword filter by name or description
      * @return list of products
      */
-    public List<Product> getAllProducts(String keyword) {
+    public List<Product> getAllProducts(final String keyword) {
         if (keyword != null && !keyword.isEmpty()) {
             return productRepository.findByKeyword(keyword);
         } else {
@@ -31,22 +43,22 @@ public class ProductService {
     }
 
     /**
-     * Get one product by id
+     * Get one product by id.
      *
      * @param id product id
      * @return product
      */
-    public Optional<Product> getProductById(Long id) {
+    public Optional<Product> getProductById(final Long id) {
         return productRepository.findById(id);
     }
 
     /**
-     * Save a product
+     * Save a product.
      *
      * @param product product
      * @return saved product
      */
-    public Product saveProduct(Product product) {
+    public Product saveProduct(final Product product) {
         try {
             return productRepository.save(product);
         } catch (DataIntegrityViolationException e) {
@@ -58,12 +70,12 @@ public class ProductService {
     }
 
     /**
-     * Create a new product
+     * Create a new product.
      *
      * @param product product
      * @return created product
      */
-    public Product createProduct(Product product) {
+    public Product createProduct(final Product product) {
         return this.saveProduct(product);
     }
 
@@ -75,7 +87,7 @@ public class ProductService {
      * @param newProduct new product object
      * @return updated product
      */
-    public Product updateProduct(Long id, Product newProduct) {
+    public Product updateProduct(final Long id, final Product newProduct) {
         return productRepository.findById(id)
                 .map(product -> {
                     product.setName(newProduct.getName());
@@ -89,42 +101,54 @@ public class ProductService {
     }
 
     /**
-     * Delete a product by id
+     * Delete a product by id.
      *
      * @param id product id
      */
-    public void deleteProduct(Long id) {
+    public void deleteProduct(final Long id) {
         if (!productRepository.existsById(id)) {
             throw new ProductNotFoundException(id);
         }
         productRepository.deleteById(id);    }
 
     /**
-     * Apply discount to all products
+     * Apply discount to all products.
      *
      * @param products list of products
      * @param discount discount percentage
      * @return list of products with discounted prices
      */
-    public List<Product> applyDiscount(List<Product> products, int discount) {
-        if (discount < 0 || discount > 100) {
-            throw new IllegalArgumentException("discount must be between 0 and 100");
+    public List<Product> applyDiscount(
+            final List<Product> products,
+            final int discount
+    ) {
+        if (discount < 0 || discount > MAX_DISCOUNT) {
+            throw new IllegalArgumentException(
+                    "discount must be between 0 and 100"
+            );
         }
         return products.stream()
-                .map(product -> new Product(product, product.getDiscountedPrice(discount)))
+                .map(
+                        product -> new Product(
+                                product,
+                                product.getDiscountedPrice(discount)
+                        )
+                )
                 .collect(Collectors.toList());
     }
 
     /**
-     * Apply discount to a product
+     * Apply discount to a product.
      *
      * @param product product
      * @param discount discount percentage
      * @return product with discounted price
      */
-    public Product applyDiscount(Product product, int discount) {
-        if (discount < 0 || discount > 100) {
-            throw new IllegalArgumentException("discount must be between 0 and 100");
+    public Product applyDiscount(final Product product, final int discount) {
+        if (discount < 0 || discount > MAX_DISCOUNT) {
+            throw new IllegalArgumentException(
+                    "discount must be between 0 and 100"
+            );
         }
         return new Product(product, product.getDiscountedPrice(discount));
     }
