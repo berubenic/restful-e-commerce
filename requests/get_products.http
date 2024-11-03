@@ -1,0 +1,30 @@
+### GET products as JSON
+GET http://localhost:8080/products
+Accept: application/json
+
+### GET products as XML
+GET http://localhost:8080/products
+Accept: application/xml
+
+### GET products as JSON by keyword
+GET http://localhost:8080/products?keyword=apple
+Accept: application/json
+
+### GET products as XML by keyword
+GET http://localhost:8080/products?keyword=brush
+Accept: application/xml
+
+### GET products with discount applied to price as JSON
+GET http://localhost:8080/products?discount=10
+Accept: application/json
+
+### GET products with discount applied to price as XML
+GET http://localhost:8080/products?discount=10
+
+### GET products with discount (error case with discount > 100) as JSON
+GET http://localhost:8080/products?discount=101
+Accept: application/json
+
+### GET products with discount (error case with discount > 100) as XML
+GET http://localhost:8080/products?discount=101
+Accept: application/xml

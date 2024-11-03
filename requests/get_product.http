@@ -1,0 +1,23 @@
+### GET single product as JSON
+GET http://localhost:8080/products/100
+Accept: application/json
+
+### GET single product as XML
+GET http://localhost:8080/products/1
+Accept: application/xml
+
+### GET single product with discount applied to price as JSON
+GET http://localhost:8080/products/1?discount=10
+Accept: application/json
+
+### GET single product with discount applied to price as XML
+GET http://localhost:8080/products/1?discount=10
+Accept: application/xml
+
+### GET single product with discount (error case with discount > 100) as JSON
+GET http://localhost:8080/products/1?discount=101
+Accept: application/json
+
+### GET single product with discount (error case with discount > 100) as XML
+GET http://localhost:8080/products/1?discount=101
+Accept: application/xml

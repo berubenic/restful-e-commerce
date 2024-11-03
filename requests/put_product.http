@@ -1,0 +1,91 @@
+### PUT single product as JSON
+PUT http://localhost:8080/products/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Updated Pencil",
+  "description": "An updated pencil for writing",
+  "price": 1.99,
+  "stockQuantity": 200,
+  "imagePath": "updated-pencil.jpg"
+}
+
+### PUT single product as XML
+PUT http://localhost:8080/products/1
+Accept: application/xml
+Content-Type: application/xml
+
+<product>
+    <id>1</id>
+    <name>Updated Pencil</name>
+    <description>An updated pencil for writing</description>
+    <price>1.99</price>
+    <stockQuantity>200</stockQuantity>
+    <imagePath>updated-pencil.jpg</imagePath>
+</product>
+
+### PUT single product (reset to original) as JSON
+PUT http://localhost:8080/products/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Pencil",
+  "description": "A pencil for writing",
+  "price": 0.99,
+  "stockQuantity": 100,
+  "imagePath": "pencil.jpg"
+}
+
+### PUT single product (error case with invalid id) as JSON
+PUT http://localhost:8080/products/100
+Content-Type: application/json
+
+{
+  "id": 100,
+  "name": "Pencil",
+  "description": "A pencil for writing",
+  "price": 0.99,
+  "stockQuantity": 100,
+  "imagePath": "pencil.jpg"
+}
+
+### PUT single product (error case with invalid price) as JSON
+PUT http://localhost:8080/products/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Pencil",
+  "description": "A pencil for writing",
+  "price": -0.99,
+  "stockQuantity": 100,
+  "imagePath": "pencil.jpg"
+}
+
+### PUT single product (error case with invalid stock quantity) as JSON
+PUT http://localhost:8080/products/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Pencil",
+  "description": "A pencil for writing",
+  "price": 0.99,
+  "stockQuantity": -100,
+  "imagePath": "pencil.jpg"
+}
+
+### PUT single product (error case with duplicate product name) as JSON
+PUT http://localhost:8080/products/2
+Content-Type: application/json
+
+{
+  "id": 2,
+  "name": "Pencil",
+  "description": "A pencil for writing",
+  "price": 0.99,
+  "stockQuantity": 100,
+  "imagePath": "pencil.jpg"
+}

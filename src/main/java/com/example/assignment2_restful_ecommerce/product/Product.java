@@ -66,9 +66,9 @@ public class Product {
 
     public double getDiscountedPrice(int discount) {
         if (discount < 0 || discount > 100) {
-            throw new IllegalArgumentException("Discount must be between 0 and 100");
+            throw new IllegalArgumentException("discount must be between 0 and 100");
         }
-        return price * (1 - discount / 100.0);
+        return Math.round(price * (1 - discount / 100.0) * 100.0) / 100.0;
     }
 
     public int getStockQuantity() {
@@ -89,7 +89,7 @@ public class Product {
 
     public void setPrice(double price) {
         if (price < 0) {
-            throw new IllegalArgumentException("Price must be greater than or equal to 0");
+            throw new IllegalArgumentException("price must be greater than or equal to 0");
         }
 
         this.price = price;
@@ -97,7 +97,7 @@ public class Product {
 
     public void setStockQuantity(int stockQuantity) {
         if (stockQuantity < 0) {
-            throw new IllegalArgumentException("Stock quantity must be greater than or equal to 0");
+            throw new IllegalArgumentException("stock quantity must be greater than or equal to 0");
         }
 
         this.stock_quantity = stockQuantity;
