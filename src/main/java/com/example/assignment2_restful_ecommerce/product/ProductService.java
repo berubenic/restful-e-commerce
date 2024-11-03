@@ -58,6 +58,16 @@ public class ProductService {
     }
 
     /**
+     * Create a new product
+     *
+     * @param product product
+     * @return created product
+     */
+    public Product createProduct(Product product) {
+        return this.saveProduct(product);
+    }
+
+    /**
      * Update a product.
      * Uses a complete product object to update the existing product.
      *
@@ -84,8 +94,10 @@ public class ProductService {
      * @param id product id
      */
     public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
-    }
+        if (!productRepository.existsById(id)) {
+            throw new ProductNotFoundException(id);
+        }
+        productRepository.deleteById(id);    }
 
     /**
      * Apply discount to all products

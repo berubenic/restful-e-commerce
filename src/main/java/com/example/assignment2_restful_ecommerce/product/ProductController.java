@@ -64,4 +64,25 @@ public class ProductController {
     public Product update(@PathVariable Long id, @RequestBody Product newProduct) {
         return productService.updateProduct(id, newProduct);
     }
+
+    /**
+     * Create a new product.
+     *
+     * @param newProduct new product object
+     * @return created product
+     */
+    @PostMapping(path = {"", "/"}, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+    public Product create(@RequestBody Product newProduct) {
+        return productService.createProduct(newProduct);
+    }
+
+    /**
+     * Delete a product.
+     *
+     * @param id product id
+     */
+    @DeleteMapping(path = {"/{id}"}, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+    public void delete(@PathVariable Long id) {
+        productService.deleteProduct(id);
+    }
 }

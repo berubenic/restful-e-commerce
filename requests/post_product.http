@@ -1,0 +1,34 @@
+### POST as JSON
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "Water Bottle",
+  "description": "A bottle of water",
+  "price": 0.99,
+  "stockQuantity": 100,
+  "imagePath": "water-bottle.jpg"
+}
+
+### POST as XML
+POST http://localhost:8080/products
+Content-Type: application/xml
+
+<product>
+  <name>Water Bottle</name>
+  <description>A bottle of water</description>
+  <price>0.99</price>
+  <stockQuantity>100</stockQuantity>
+  <imagePath>water-bottle.jpg</imagePath>
+</product>
+
+### POST (error case with missing name) as JSON
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "description": "A bottle of water",
+  "price": 0.99,
+  "stockQuantity": 100,
+  "imagePath": "water-bottle.jpg"
+}
