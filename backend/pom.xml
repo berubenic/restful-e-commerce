@@ -135,7 +135,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <directory>${project.parent.basedir}/backend/target</directory>
     </build>
 
 </project>
