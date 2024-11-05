@@ -7,15 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Assignment2RestfulECommerceApplication {
 
     /**
-     * Private constructor to prevent instantiation.
-     */
-    private Assignment2RestfulECommerceApplication() {
-        throw new UnsupportedOperationException(
-                "This is a utility class and cannot be instantiated"
-        );
-    }
-
-    /**
      * Main method to run the application.
      * @param args Command line arguments.
      */

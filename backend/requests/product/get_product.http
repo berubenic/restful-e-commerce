@@ -1,5 +1,5 @@
 ### GET single product as JSON
-GET http://localhost:8080/products/100
+GET http://localhost:8080/products/1
 Accept: application/json
 
 ### GET single product as XML

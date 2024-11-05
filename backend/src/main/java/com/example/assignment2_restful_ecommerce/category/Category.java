@@ -4,15 +4,17 @@
 package com.example.assignment2_restful_ecommerce.category;
 
 import com.example.assignment2_restful_ecommerce.product.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
 
 import java.util.List;
 
@@ -44,10 +46,11 @@ public final class Category {
     /**
      * The list of products in the category.
      */
+    @JsonIgnore
     @OneToMany(
             mappedBy = "category",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            fetch = FetchType.EAGER
     )
     private List<Product> products;
 
@@ -66,6 +69,33 @@ public final class Category {
     public Category(final String pName, final String pDescription) {
         this.name = pName;
         this.description = pDescription;
+    }
+
+    /**
+     * Get the id of the category.
+     *
+     * @return The id of the category.
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Get the name of the category.
+     *
+     * @return The name of the category.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Get the description of the category.
+     *
+     * @return The description of the category.
+     */
+    public String getDescription() {
+        return description;
     }
 
     /**

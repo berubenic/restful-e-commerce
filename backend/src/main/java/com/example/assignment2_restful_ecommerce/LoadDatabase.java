@@ -25,7 +25,7 @@ class LoadDatabase {
             final ProductRepository productRepository,
             final CategoryRepository categoryRepository
     ) {
-        return _ -> {
+        return args -> {
             // Preload categories
             Category officeCategory = preloadCategory(
                     categoryRepository,

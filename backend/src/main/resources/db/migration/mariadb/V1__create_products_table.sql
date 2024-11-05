@@ -4,5 +4,5 @@ CREATE TABLE products (
   description TEXT NOT NULL,
   price DOUBLE NOT NULL,
   stock_quantity INT NOT NULL,
-  image_path VARCHAR(255) NOT NULL
+  image_path VARCHAR(255) NULL
 );

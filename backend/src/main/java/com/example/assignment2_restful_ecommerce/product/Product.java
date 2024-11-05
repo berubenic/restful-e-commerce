@@ -1,14 +1,9 @@
 package com.example.assignment2_restful_ecommerce.product;
 
 import com.example.assignment2_restful_ecommerce.category.Category;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 @Entity
@@ -61,14 +56,14 @@ public final class Product {
      * The image path of the product.
      * Relative path from the resources/static/images folder.
      */
-    @Column(nullable = false, name = "image_path")
+    @Column(name = "image_path")
     private String imagePath;
 
     /**
      * The category of the product.
      */
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
     private Category category;
 
     /**
