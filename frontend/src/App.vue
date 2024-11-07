@@ -1,18 +1,23 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/">Home</router-link>
+    |
+    <router-link to="/products">Products</router-link>
   </nav>
-  <router-view />
+  <div class="wrapper">
+    <router-view />
+  </div>
 </template>
 
 <style lang="scss">
+@import "@/styles/_variables.scss";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $primary-color;
 }
 
 nav {
@@ -27,4 +32,22 @@ nav {
     }
   }
 }
+
+.wrapper {
+  padding: 30px;
+
+  @media (min-width: 768px) {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 1024px;
+  }
+
+  @media (min-width: 1280px) {
+    max-width: 1280px;
+  }
+}
 </style>
+<script setup lang="ts"></script>

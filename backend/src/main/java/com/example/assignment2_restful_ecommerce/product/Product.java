@@ -142,6 +142,15 @@ public final class Product {
     }
 
     /**
+     * Set the unique identifier of the product.
+     *
+     * @param pId the unique identifier of the product
+     */
+    public void setId(final Long pId) {
+        this.id = pId;
+    }
+
+    /**
      * Get the name of the product.
      *
      * @return the name of the product

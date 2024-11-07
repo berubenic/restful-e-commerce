@@ -1,15 +1,8 @@
 package com.example.assignment2_restful_ecommerce.product;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,13 +31,7 @@ public class ProductController {
      * @param discount apply given discount to all products
      * @return list of products
      */
-    @GetMapping(
-            path = {"", "/"},
-            produces = {
-                    MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE
-            }
-    )
+    @GetMapping(path = {"", "/"})
     public List<Product> all(
             @RequestParam(required = false) final String keyword,
             @RequestParam(required = false) final Integer discount
@@ -65,13 +52,7 @@ public class ProductController {
      * @param discount apply given discount to the product
      * @return product
      */
-    @GetMapping(
-            path = {"/{id}"},
-            produces = {
-                    MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE
-            }
-    )
+    @GetMapping(path = {"/{id}"})
     public Product one(
             @PathVariable final Long id,
             @RequestParam(required = false) final Integer discount
@@ -94,13 +75,7 @@ public class ProductController {
      * @param newProduct new product object
      * @return updated product
      */
-    @PutMapping(
-            path = {"/{id}"},
-            consumes = {
-                    MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE
-            }
-    )
+    @PutMapping(path = {"/{id}"})
     public Product update(
             @PathVariable final Long id,
             @RequestBody final Product newProduct
@@ -114,13 +89,8 @@ public class ProductController {
      * @param newProduct new product object
      * @return created product
      */
-    @PostMapping(
-            path = {"", "/"},
-            consumes = {
-                    MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE
-            }
-    )
+    @PostMapping(path = {"", "/"})
+    @ResponseStatus(HttpStatus.CREATED)
     public Product create(
             @RequestBody final Product newProduct
     ) {
@@ -132,13 +102,8 @@ public class ProductController {
      *
      * @param id product id
      */
-    @DeleteMapping(
-            path = {"/{id}"},
-            produces = {
-                    MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE
-            }
-    )
+    @DeleteMapping(path = {"/{id}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(
             @PathVariable final Long id
     ) {
