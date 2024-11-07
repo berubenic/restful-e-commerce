@@ -1,5 +1,5 @@
 ### POST as JSON
-POST http://localhost:8080/products
+POST http://localhost:8089/products
 Content-Type: application/json
 
 {
@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ### POST as XML
-POST http://localhost:8080/products
+POST http://localhost:8089/products
 Content-Type: application/xml
 
 <product>
@@ -23,7 +23,7 @@ Content-Type: application/xml
 </product>
 
 ### POST (error case with missing name) as JSON
-POST http://localhost:8080/products
+POST http://localhost:8089/products
 Content-Type: application/json
 
 {

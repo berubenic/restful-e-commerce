@@ -1,5 +1,5 @@
 ### PUT single product as JSON
-PUT http://localhost:8080/products/1
+PUT http://localhost:8089/products/1
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### PUT single product as XML
-PUT http://localhost:8080/products/1
+PUT http://localhost:8089/products/1
 Accept: application/xml
 Content-Type: application/xml
 
@@ -26,7 +26,7 @@ Content-Type: application/xml
 </product>
 
 ### PUT single product (reset to original) as JSON
-PUT http://localhost:8080/products/1
+PUT http://localhost:8089/products/1
 Content-Type: application/json
 
 {
@@ -39,7 +39,7 @@ Content-Type: application/json
 }
 
 ### PUT single product (error case with invalid id) as JSON
-PUT http://localhost:8080/products/100
+PUT http://localhost:8089/products/100
 Content-Type: application/json
 
 {
@@ -52,7 +52,7 @@ Content-Type: application/json
 }
 
 ### PUT single product (error case with invalid price) as JSON
-PUT http://localhost:8080/products/1
+PUT http://localhost:8089/products/1
 Content-Type: application/json
 
 {
@@ -65,7 +65,7 @@ Content-Type: application/json
 }
 
 ### PUT single product (error case with invalid stock quantity) as JSON
-PUT http://localhost:8080/products/1
+PUT http://localhost:8089/products/1
 Content-Type: application/json
 
 {
@@ -78,7 +78,7 @@ Content-Type: application/json
 }
 
 ### PUT single product (error case with duplicate product name) as JSON
-PUT http://localhost:8080/products/2
+PUT http://localhost:8089/products/2
 Content-Type: application/json
 
 {

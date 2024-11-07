@@ -31,7 +31,7 @@ class ProductControllerTest {
 
     private ObjectMapper objectMapper;
 
-    private final XmlMapper xmlMapper = new XmlMapper();
+    private XmlMapper xmlMapper;
 
     private final Product product1 = new Product(
             "Product1",
@@ -54,6 +54,7 @@ class ProductControllerTest {
     @BeforeEach
     void setUp() {
         objectMapper = new ObjectMapper();
+        xmlMapper = new XmlMapper();
     }
 
     @Test
@@ -105,6 +106,15 @@ class ProductControllerTest {
                 .andExpect(content().contentType(xmlMediaType))
                 .andExpect(xpath("/product/id").string("1"))
                 .andExpect(xpath("/product/name").string("Product1"));
+    }
+
+    @Test
+    void oneProductNotFoundJson() throws Exception {
+        when(productService.getProductById(1L)).thenThrow(new ProductNotFoundException(1L));
+
+        mockMvc.perform(get("/products/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test

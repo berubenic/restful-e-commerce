@@ -81,6 +81,15 @@ public final class Category {
     }
 
     /**
+     * Set the id of the category.
+     *
+     * @param pId The id to set for the category.
+     */
+    public void setId(long pId) {
+        this.id = pId;
+    }
+
+    /**
      * Get the name of the category.
      *
      * @return The name of the category.
@@ -90,12 +99,30 @@ public final class Category {
     }
 
     /**
+     * Set the name of the category.
+     *
+     * @param pName The name to set for the category.
+     */
+    public void setName(final String pName) {
+        this.name = pName;
+    }
+
+    /**
      * Get the description of the category.
      *
      * @return The description of the category.
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Set the description of the category.
+     *
+     * @param pDescription The description to set for the category.
+     */
+    public void setDescription(final String pDescription) {
+        this.description = pDescription;
     }
 
     /**
