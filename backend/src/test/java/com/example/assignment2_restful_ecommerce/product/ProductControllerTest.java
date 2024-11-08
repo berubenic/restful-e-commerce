@@ -4,6 +4,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.example.assignment2_restful_ecommerce.PropertyMustBeUniqueException;
+import com.example.assignment2_restful_ecommerce.PropertyMustNotBeBlankException;
 import com.example.assignment2_restful_ecommerce.category.Category;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -121,7 +123,7 @@ class ProductControllerTest {
     void createProductJson() throws Exception {
         Product createdProduct = product1;
         createdProduct.setId(1L);
-        when(productService.createProduct(any(Product.class))).thenReturn(createdProduct);
+        when(productService.saveProduct(any(Product.class))).thenReturn(createdProduct);
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -136,7 +138,7 @@ class ProductControllerTest {
     void createProductXml() throws Exception {
         Product createdProduct = product1;
         createdProduct.setId(1L);
-        when(productService.createProduct(any(Product.class))).thenReturn(createdProduct);
+        when(productService.saveProduct(any(Product.class))).thenReturn(createdProduct);
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_XML)
@@ -146,6 +148,27 @@ class ProductControllerTest {
                 .andExpect(content().contentType(xmlMediaType))
                 .andExpect(xpath("/product/id").string("1"))
                 .andExpect(xpath("/product/name").string("Product1"));
+    }
+
+    @Test
+    void createProduct_nameAlreadyExistsJson() throws Exception {
+        when(productService.saveProduct(any(Product.class))).thenThrow(new PropertyMustBeUniqueException("name"));
+
+        mockMvc.perform(post("/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(product1)))
+                .andExpect(status().isConflict());
+    }
+
+    @Test
+    void createProduct_nameIsBlankJson() throws Exception {
+        product1.setName("");
+        when(productService.saveProduct(any(Product.class))).thenThrow(new PropertyMustNotBeBlankException("name"));
+
+        mockMvc.perform(post("/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(product1)))
+                .andExpect(status().isConflict());
     }
 
     @Test

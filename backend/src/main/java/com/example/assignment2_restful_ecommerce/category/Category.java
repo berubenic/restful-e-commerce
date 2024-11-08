@@ -3,6 +3,7 @@
  */
 package com.example.assignment2_restful_ecommerce.category;
 
+import com.example.assignment2_restful_ecommerce.PropertyMustNotBeBlankException;
 import com.example.assignment2_restful_ecommerce.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -141,6 +142,18 @@ public final class Category {
      */
     public void setProducts(final List<Product> pProducts) {
         this.products = pProducts;
+    }
+
+    /**
+     * Validate the category.
+     */
+    public void validate() {
+        if (name == null || name.isBlank()) {
+            throw new PropertyMustNotBeBlankException("name");
+        }
+        if (description == null || description.isBlank()) {
+            throw new PropertyMustNotBeBlankException("name");
+        }
     }
 
     @Override

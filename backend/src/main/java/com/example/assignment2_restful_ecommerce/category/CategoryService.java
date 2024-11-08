@@ -1,5 +1,7 @@
 package com.example.assignment2_restful_ecommerce.category;
 
+import com.example.assignment2_restful_ecommerce.PropertyMustBeUniqueException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,5 +41,24 @@ public class CategoryService {
      */
     public Optional<Category> getCategoryById(final Long id) {
         return categoryRepository.findById(id);
+    }
+
+    /**
+     * Save a category.
+     *
+     * @param category category
+     * @return saved category
+     */
+    public Category saveCategory(final Category category) {
+        category.validate();
+
+        try {
+            return categoryRepository.save(category);
+        } catch (DataIntegrityViolationException e) {
+            if (e.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+                throw new PropertyMustBeUniqueException("name");
+            }
+            throw e;
+        }
     }
 }

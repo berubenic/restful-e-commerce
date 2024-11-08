@@ -4,6 +4,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.example.assignment2_restful_ecommerce.PropertyMustBeUniqueException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -106,5 +107,55 @@ public class CategoryControllerTest {
         mockMvc.perform(get("/categories/1")
                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void createCategoryJson() throws Exception {
+        Category createdCategory = category1;
+        createdCategory.setId(1L);
+        when(categoryService.saveCategory(any(Category.class))).thenReturn(createdCategory);
+
+        mockMvc.perform(post("/categories")
+                       .contentType(MediaType.APPLICATION_JSON)
+                       .content(objectMapper.writeValueAsString(category1)))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(objectMapper.writeValueAsString(createdCategory)));
+    }
+
+    @Test
+    void createCategoryXml() throws Exception {
+        Category createdCategory = category1;
+        createdCategory.setId(1L);
+        when(categoryService.saveCategory(any(Category.class))).thenReturn(createdCategory);
+
+        mockMvc.perform(post("/categories")
+                        .contentType(MediaType.APPLICATION_XML)
+                        .accept(MediaType.APPLICATION_XML)
+                        .content(xmlMapper.writeValueAsString(category1)))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(xmlMediaType))
+                .andExpect(xpath("/category/name").string(category1.getName()));
+    }
+
+    @Test
+    void createCategory_nameAlreadyExists_throwsException() throws Exception {
+        when(categoryService.saveCategory(any(Category.class))).thenThrow(new PropertyMustBeUniqueException("name"));
+
+        mockMvc.perform(post("/categories")
+                       .contentType(MediaType.APPLICATION_JSON)
+                       .content(objectMapper.writeValueAsString(category1)))
+                .andExpect(status().isConflict());
+    }
+
+    @Test
+    void createCategory_nameIsBlankJson() throws Exception {
+        category1.setName("");
+        when(categoryService.saveCategory(any(Category.class))).thenThrow(new PropertyMustBeUniqueException("name"));
+
+        mockMvc.perform(post("/categories")
+                       .contentType(MediaType.APPLICATION_JSON)
+                       .content(objectMapper.writeValueAsString(category1)))
+                .andExpect(status().isConflict());
     }
 }

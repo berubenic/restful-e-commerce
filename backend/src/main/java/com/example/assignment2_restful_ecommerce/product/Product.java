@@ -1,5 +1,6 @@
 package com.example.assignment2_restful_ecommerce.product;
 
+import com.example.assignment2_restful_ecommerce.PropertyMustNotBeBlankException;
 import com.example.assignment2_restful_ecommerce.category.Category;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -237,9 +238,7 @@ public final class Product {
      */
     public void setPrice(final double pPrice) {
         if (pPrice < 0) {
-            throw new IllegalArgumentException(
-                    "price must be greater than or equal to 0"
-            );
+            throw new ProductPriceMustBePositiveException();
         }
 
         this.price = pPrice;
@@ -267,6 +266,26 @@ public final class Product {
      */
     public void setImagePath(final String pImagePath) {
         this.imagePath = pImagePath;
+    }
+
+    public void validate() {
+        if (name == null || name.isBlank()) {
+            throw new PropertyMustNotBeBlankException("name");
+        }
+        if (description == null || description.isBlank()) {
+            throw new PropertyMustNotBeBlankException("description");
+        }
+        if (price < 0) {
+            throw new ProductPriceMustBePositiveException();
+        }
+        if (stockQuantity < 0) {
+            throw new IllegalArgumentException(
+                    "stock quantity must be greater than or equal to 0"
+            );
+        }
+        if (imagePath == null || imagePath.isBlank()) {
+            throw new PropertyMustNotBeBlankException("imagePath");
+        }
     }
 
     @Override

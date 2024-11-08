@@ -1,5 +1,6 @@
 package com.example.assignment2_restful_ecommerce.product;
 
+import com.example.assignment2_restful_ecommerce.PropertyMustBeUniqueException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -59,24 +60,16 @@ public class ProductService {
      * @return saved product
      */
     public Product saveProduct(final Product product) {
+        product.validate();
+
         try {
             return productRepository.save(product);
         } catch (DataIntegrityViolationException e) {
             if (e.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
-                throw new ProductNameMustBeUniqueException(product.getName());
+                throw new PropertyMustBeUniqueException("name");
             }
             throw e;
         }
-    }
-
-    /**
-     * Create a new product.
-     *
-     * @param product product
-     * @return created product
-     */
-    public Product createProduct(final Product product) {
-        return this.saveProduct(product);
     }
 
     /**

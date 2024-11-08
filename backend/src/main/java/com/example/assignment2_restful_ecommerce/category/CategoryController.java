@@ -3,9 +3,7 @@ package com.example.assignment2_restful_ecommerce.category;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/categories")
@@ -47,13 +45,15 @@ public class CategoryController {
         );
     }
 
-    @ExceptionHandler(CategoryNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ResponseBody
-    public Map<String, Object> handleCategoryNotFoundException(CategoryNotFoundException e) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("success", false);
-        response.put("error", e.getMessage());
-        return response;
+    /**
+     * Create a category.
+     *
+     * @param category category
+     * @return created category
+     */
+    @PostMapping(path = {"", "/"})
+    @ResponseStatus(HttpStatus.CREATED)
+    public Category create(@RequestBody final Category category) {
+        return categoryService.saveCategory(category);
     }
 }

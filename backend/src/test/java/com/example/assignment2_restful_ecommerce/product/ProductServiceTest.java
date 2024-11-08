@@ -1,5 +1,6 @@
 package com.example.assignment2_restful_ecommerce.product;
 
+import com.example.assignment2_restful_ecommerce.PropertyMustBeUniqueException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,9 +23,19 @@ class ProductServiceTest {
     @InjectMocks
     private ProductService productService;
 
+    private Product product1;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        product1 = new Product(
+                "Product1",
+                "Description1",
+                100.0,
+                100,
+                "image1.jpg",
+                null
+        );
     }
 
     @Test
@@ -76,31 +87,31 @@ class ProductServiceTest {
 
     @Test
     void saveProduct_validProduct_returnsSavedProduct() {
-        Product product = new Product();
-        when(productRepository.save(product)).thenReturn(product);
+        when(productRepository.save(product1)).thenReturn(product1);
 
-        Product result = productService.saveProduct(product);
+        Product result = productService.saveProduct(product1);
 
-        assertEquals(product, result);
-        verify(productRepository, times(1)).save(product);
+        assertEquals(product1, result);
+        verify(productRepository, times(1)).save(product1);
     }
 
     @Test
     void saveProduct_duplicateProductName_throwsException() {
-        Product product = new Product();
-        product.setName("duplicate");
-        DataIntegrityViolationException exception = new DataIntegrityViolationException("duplicate", new org.hibernate.exception.ConstraintViolationException("", null, ""));
-        when(productRepository.save(product)).thenThrow(exception);
+        product1.setName("duplicate");
+        DataIntegrityViolationException exception = new DataIntegrityViolationException(
+                "duplicate", new org.hibernate.exception.ConstraintViolationException("", null, "")
+        );
+        when(productRepository.save(product1)).thenThrow(exception);
 
-        assertThrows(ProductNameMustBeUniqueException.class, () -> productService.saveProduct(product));
-        verify(productRepository, times(1)).save(product);
+        assertThrows(PropertyMustBeUniqueException.class, () -> productService.saveProduct(product1));
+        verify(productRepository, times(1)).save(product1);
     }
 
     @Test
     void updateProduct_existingId_updatesProduct() {
         Long id = 1L;
-        Product existingProduct = new Product();
-        Product newProduct = new Product();
+        Product existingProduct = product1;
+        Product newProduct = product1;
         when(productRepository.findById(id)).thenReturn(Optional.of(existingProduct));
         when(productRepository.save(existingProduct)).thenReturn(existingProduct);
 

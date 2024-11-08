@@ -25,12 +25,20 @@ nav {
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: $primary-color;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: $secondary-color;
     }
   }
+}
+
+a,
+a:visited {
+  color: $primary-color;
+}
+a:hover {
+  color: $secondary-color;
 }
 
 .wrapper {
