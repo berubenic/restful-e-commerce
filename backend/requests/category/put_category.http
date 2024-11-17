@@ -1,0 +1,20 @@
+### PUT single category as JSON
+PUT http://localhost:8089/categories/2
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Updated Category",
+  "description": "An updated category"
+}
+
+### PUT single category as XML
+PUT http://localhost:8089/categories/2
+Accept: application/xml
+Content-Type: application/xml
+
+<category>
+    <id>1</id>
+    <name>Updated Category</name>
+    <description>An updated category</description>
+</category>

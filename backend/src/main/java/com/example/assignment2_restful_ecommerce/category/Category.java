@@ -50,7 +50,7 @@ public final class Category {
     @JsonIgnore
     @OneToMany(
             mappedBy = "category",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.DETACH,
             fetch = FetchType.EAGER
     )
     private List<Product> products;

@@ -1,0 +1,16 @@
+### POST as JSON
+POST http://localhost:8089/categories
+Content-Type: application/json
+
+{
+  "name": "Beverage",
+  "description": "Beverage category"
+}
+### POST as XML
+POST http://localhost:8089/categories
+Content-Type: application/xml
+
+<category>
+    <name>Beverage</name>
+    <description>Beverage category</description>
+</category>

@@ -1,0 +1,7 @@
+### GET categories as JSON
+GET http://localhost:8089/categories
+Accept: application/json
+
+### GET categories as XML
+GET http://localhost:8089/categories
+Accept: application/xml

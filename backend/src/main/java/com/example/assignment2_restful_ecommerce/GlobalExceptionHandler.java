@@ -28,7 +28,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             PropertyMustBeUniqueException.class,
             ProductPriceMustBePositiveException.class,
-            PropertyMustNotBeBlankException.class
+            PropertyMustNotBeBlankException.class,
+            IllegalArgumentException.class
     })
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody

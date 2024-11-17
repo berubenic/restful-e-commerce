@@ -1,0 +1,7 @@
+### DELETE product by id as JSON
+DELETE http://localhost:8089/categories/1
+Accept: application/json
+
+### DELETE product by id as XML
+DELETE http://localhost:8089/categories/12
+Accept: application/xml
