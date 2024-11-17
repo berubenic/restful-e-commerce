@@ -61,4 +61,33 @@ public class CategoryService {
             throw e;
         }
     }
+
+    /**
+     * Update a category.
+     *
+     * @param id category id
+     * @param category category
+     * @return updated category
+     */
+    public Category updateCategory(final Long id, final Category category) {
+        return categoryRepository.findById(id)
+                .map(existingCategory -> {
+                    existingCategory.setName(category.getName());
+                    existingCategory.setDescription(category.getDescription());
+                    return categoryRepository.save(existingCategory);
+                })
+                .orElseThrow(() -> new CategoryNotFoundException(id));
+    }
+
+    /**
+     * Delete a category.
+     *
+     * @param id category id
+     */
+    public void deleteCategory(final Long id) {
+        if (!categoryRepository.existsById(id)) {
+            throw new CategoryNotFoundException(id);
+        }
+        categoryRepository.deleteById(id);
+    }
 }

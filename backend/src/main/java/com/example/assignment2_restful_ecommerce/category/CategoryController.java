@@ -56,4 +56,27 @@ public class CategoryController {
     public Category create(@RequestBody final Category category) {
         return categoryService.saveCategory(category);
     }
+
+    /**
+     * Update a category.
+     *
+     * @param id category id
+     * @param category category
+     * @return updated category
+     */
+    @PutMapping(path = {"/{id}"})
+    public Category update(@PathVariable final Long id, @RequestBody final Category category) {
+        return categoryService.updateCategory(id, category);
+    }
+
+    /**
+     * Delete a category.
+     *
+     * @param id category id
+     */
+    @DeleteMapping(path = {"/{id}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable final Long id) {
+        categoryService.deleteCategory(id);
+    }
 }

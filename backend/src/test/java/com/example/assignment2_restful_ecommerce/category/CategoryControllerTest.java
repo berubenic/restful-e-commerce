@@ -158,4 +158,44 @@ public class CategoryControllerTest {
                        .content(objectMapper.writeValueAsString(category1)))
                 .andExpect(status().isConflict());
     }
+
+    @Test
+    void updateCategoryJson() throws Exception {
+        Category updatedCategory = category1;
+        updatedCategory.setId(1L);
+        updatedCategory.setName("UpdatedCategory1");
+        when(categoryService.updateCategory(eq(1L), any(Category.class))).thenReturn(updatedCategory);
+
+        mockMvc.perform(put("/categories/1")
+                       .contentType(MediaType.APPLICATION_JSON)
+                       .content(objectMapper.writeValueAsString(category1)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.name").value("UpdatedCategory1"));
+    }
+
+    @Test
+    void updateCategoryXml() throws Exception {
+        Category updatedCategory = category1;
+        updatedCategory.setId(1L);
+        updatedCategory.setName("UpdatedCategory1");
+        when(categoryService.updateCategory(eq(1L), any(Category.class))).thenReturn(updatedCategory);
+
+        mockMvc.perform(put("/categories/1")
+                       .contentType(MediaType.APPLICATION_XML)
+                       .accept(MediaType.APPLICATION_XML)
+                       .content(xmlMapper.writeValueAsString(category1)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(xmlMediaType))
+                .andExpect(xpath("/category/name").string("UpdatedCategory1"));
+    }
+
+    @Test
+    void deleteCategory() throws Exception {
+        doNothing().when(categoryService).deleteCategory(1L);
+
+        mockMvc.perform(delete("/categories/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+    }
 }
